@@ -50,7 +50,7 @@ public class UpdateServlet extends HttpServlet {
            m.setContent(content);
 
            Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-           m.setUpdated_at(currentTime);  // 更新日時ののみ上書き
+           m.setUpdated_at(currentTime);  // 更新日時のみ上書き
 
            // バリデーションを実行してエラーがあったら編集画面のフォームに戻る
            List<String> errors = MessageValidator.validate(m);
@@ -62,7 +62,7 @@ public class UpdateServlet extends HttpServlet {
                request.setAttribute("message", m);
                request.setAttribute("errors", errors);
 
-               RequestDispatcher rd = request.getRequestDispatcher("WeB-INF/views/messages/edit.jsp");
+               RequestDispatcher rd = request.getRequestDispatcher("WEB-INF/views/messages/edit.jsp");
                rd.forward(request, response);
            } else {
                // データベースを更新
@@ -70,13 +70,6 @@ public class UpdateServlet extends HttpServlet {
                em.getTransaction().commit();
                request.getSession().setAttribute("flush", "更新が完了しました。");
                em.close();
-           }
-
-           // データベースを更新
-           em.getTransaction().begin();
-           em.getTransaction().commit();
-           request.getSession().setAttribute("flush", "更新が完了しました。");
-           em.close();
 
            // セッションスコープ上の不要になったデータを削除
            request.getSession().removeAttribute("message_id");
@@ -86,5 +79,5 @@ public class UpdateServlet extends HttpServlet {
 
         }
     }
-
+  }
 }
